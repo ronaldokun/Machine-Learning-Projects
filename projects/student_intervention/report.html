@@ -11811,7 +11811,7 @@ div#notebook {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong>
-State this way, the output is binary:</p>
+The output is a binary categorical variable, i.e. discrete:</p>
 <ul>
 <li>1 - The student needs early invervention</li>
 <li>0 - The student doesn't need early intervention</li>
@@ -12089,7 +12089,7 @@ State this way, the output is binary:</p>
 <span class="n">n_students</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
 <span class="c1"># Calculate number of features</span>
-<span class="n">n_features</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">n_features</span> <span class="o">=</span> <span class="n">student_data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span> <span class="c1"># Excluding the target variable</span>
 
 <span class="c1"># Calculate passing students</span>
 <span class="n">n_passed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">student_data</span><span class="o">.</span><span class="n">passed</span> <span class="o">==</span> <span class="s1">&#39;yes&#39;</span><span class="p">)</span>
@@ -12121,7 +12121,7 @@ State this way, the output is binary:</p>
 
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>Total number of students: 395
-Number of features: 31
+Number of features: 30
 Number of students who passed: 265
 Number of students who failed: 130
 Graduation rate of the class: 67.09%
@@ -12165,8 +12165,7 @@ Graduation rate of the class: 67.09%
 <span class="n">y_all</span> <span class="o">=</span> <span class="n">student_data</span><span class="p">[</span><span class="n">target_col</span><span class="p">]</span>
 
 <span class="c1"># Show the feature information by printing the first five rows</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Feature values:&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">X_all</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="n">X_all</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -12185,32 +12184,183 @@ Graduation rate of the class: 67.09%
 [&#39;school&#39;, &#39;sex&#39;, &#39;age&#39;, &#39;address&#39;, &#39;famsize&#39;, &#39;Pstatus&#39;, &#39;Medu&#39;, &#39;Fedu&#39;, &#39;Mjob&#39;, &#39;Fjob&#39;, &#39;reason&#39;, &#39;guardian&#39;, &#39;traveltime&#39;, &#39;studytime&#39;, &#39;failures&#39;, &#39;schoolsup&#39;, &#39;famsup&#39;, &#39;paid&#39;, &#39;activities&#39;, &#39;nursery&#39;, &#39;higher&#39;, &#39;internet&#39;, &#39;romantic&#39;, &#39;famrel&#39;, &#39;freetime&#39;, &#39;goout&#39;, &#39;Dalc&#39;, &#39;Walc&#39;, &#39;health&#39;, &#39;absences&#39;]
 
 Target column: passed
-
-Feature values:
-  school sex  age address famsize Pstatus  Medu  Fedu     Mjob      Fjob  \
-0     GP   F   18       U     GT3       A     4     4  at_home   teacher   
-1     GP   F   17       U     GT3       T     1     1  at_home     other   
-2     GP   F   15       U     LE3       T     1     1  at_home     other   
-3     GP   F   15       U     GT3       T     4     2   health  services   
-4     GP   F   16       U     GT3       T     3     3    other     other   
-
-    ...    higher internet  romantic  famrel  freetime goout Dalc Walc health  \
-0   ...       yes       no        no       4         3     4    1    1      3   
-1   ...       yes      yes        no       5         3     3    1    1      3   
-2   ...       yes      yes        no       4         3     2    2    3      3   
-3   ...       yes      yes       yes       3         2     2    1    1      5   
-4   ...       yes       no        no       4         3     2    1    2      5   
-
-  absences  
-0        6  
-1        4  
-2       10  
-3        2  
-4        4  
-
-[5 rows x 30 columns]
 </pre>
 </div>
+</div>
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[4]:</div>
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>school</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>address</th>
+      <th>famsize</th>
+      <th>Pstatus</th>
+      <th>Medu</th>
+      <th>Fedu</th>
+      <th>Mjob</th>
+      <th>Fjob</th>
+      <th>...</th>
+      <th>higher</th>
+      <th>internet</th>
+      <th>romantic</th>
+      <th>famrel</th>
+      <th>freetime</th>
+      <th>goout</th>
+      <th>Dalc</th>
+      <th>Walc</th>
+      <th>health</th>
+      <th>absences</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>GP</td>
+      <td>F</td>
+      <td>18</td>
+      <td>U</td>
+      <td>GT3</td>
+      <td>A</td>
+      <td>4</td>
+      <td>4</td>
+      <td>at_home</td>
+      <td>teacher</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>GP</td>
+      <td>F</td>
+      <td>17</td>
+      <td>U</td>
+      <td>GT3</td>
+      <td>T</td>
+      <td>1</td>
+      <td>1</td>
+      <td>at_home</td>
+      <td>other</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>5</td>
+      <td>3</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>GP</td>
+      <td>F</td>
+      <td>15</td>
+      <td>U</td>
+      <td>LE3</td>
+      <td>T</td>
+      <td>1</td>
+      <td>1</td>
+      <td>at_home</td>
+      <td>other</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>GP</td>
+      <td>F</td>
+      <td>15</td>
+      <td>U</td>
+      <td>GT3</td>
+      <td>T</td>
+      <td>4</td>
+      <td>2</td>
+      <td>health</td>
+      <td>services</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>yes</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>GP</td>
+      <td>F</td>
+      <td>16</td>
+      <td>U</td>
+      <td>GT3</td>
+      <td>T</td>
+      <td>3</td>
+      <td>3</td>
+      <td>other</td>
+      <td>other</td>
+      <td>...</td>
+      <td>yes</td>
+      <td>no</td>
+      <td>no</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+      <td>5</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 30 columns</p>
+</div>
+</div>
+
 </div>
 
 </div>
@@ -12271,13 +12421,17 @@ Feature values:
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">feature_cols</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="si">{}</span><span class="s1"> : </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">student_data</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
+
+<span class="n">range_of_values</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">feature_cols</span><span class="p">:</span>
+    <span class="n">range_of_values</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">student_data</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span>
     
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">target_col</span><span class="p">,</span> <span class="n">student_data</span><span class="p">[</span><span class="n">target_col</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
+<span class="n">pprint</span><span class="p">(</span><span class="n">range_of_values</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12292,68 +12446,69 @@ Feature values:
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>
-school : [&#39;GP&#39;, &#39;MS&#39;]
-
-sex : [&#39;F&#39;, &#39;M&#39;]
-
-age : [15, 16, 17, 18, 19, 20, 21, 22]
-
-address : [&#39;R&#39;, &#39;U&#39;]
-
-famsize : [&#39;GT3&#39;, &#39;LE3&#39;]
-
-Pstatus : [&#39;A&#39;, &#39;T&#39;]
-
-Medu : [0, 1, 2, 3, 4]
-
-Fedu : [0, 1, 2, 3, 4]
-
-Mjob : [&#39;at_home&#39;, &#39;health&#39;, &#39;other&#39;, &#39;services&#39;, &#39;teacher&#39;]
-
-Fjob : [&#39;at_home&#39;, &#39;health&#39;, &#39;other&#39;, &#39;services&#39;, &#39;teacher&#39;]
-
-reason : [&#39;course&#39;, &#39;home&#39;, &#39;other&#39;, &#39;reputation&#39;]
-
-guardian : [&#39;father&#39;, &#39;mother&#39;, &#39;other&#39;]
-
-traveltime : [1, 2, 3, 4]
-
-studytime : [1, 2, 3, 4]
-
-failures : [0, 1, 2, 3]
-
-schoolsup : [&#39;no&#39;, &#39;yes&#39;]
-
-famsup : [&#39;no&#39;, &#39;yes&#39;]
-
-paid : [&#39;no&#39;, &#39;yes&#39;]
-
-activities : [&#39;no&#39;, &#39;yes&#39;]
-
-nursery : [&#39;no&#39;, &#39;yes&#39;]
-
-higher : [&#39;no&#39;, &#39;yes&#39;]
-
-internet : [&#39;no&#39;, &#39;yes&#39;]
-
-romantic : [&#39;no&#39;, &#39;yes&#39;]
-
-famrel : [1, 2, 3, 4, 5]
-
-freetime : [1, 2, 3, 4, 5]
-
-goout : [1, 2, 3, 4, 5]
-
-Dalc : [1, 2, 3, 4, 5]
-
-Walc : [1, 2, 3, 4, 5]
-
-health : [1, 2, 3, 4, 5]
-
-absences : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 28, 30, 38, 40, 54, 56, 75]
-
-passed: [&#39;no&#39; &#39;yes&#39;]
+<pre>{&#39;Dalc&#39;: [1, 2, 3, 4, 5],
+ &#39;Fedu&#39;: [0, 1, 2, 3, 4],
+ &#39;Fjob&#39;: [&#39;at_home&#39;, &#39;health&#39;, &#39;other&#39;, &#39;services&#39;, &#39;teacher&#39;],
+ &#39;Medu&#39;: [0, 1, 2, 3, 4],
+ &#39;Mjob&#39;: [&#39;at_home&#39;, &#39;health&#39;, &#39;other&#39;, &#39;services&#39;, &#39;teacher&#39;],
+ &#39;Pstatus&#39;: [&#39;A&#39;, &#39;T&#39;],
+ &#39;Walc&#39;: [1, 2, 3, 4, 5],
+ &#39;absences&#39;: [0,
+              1,
+              2,
+              3,
+              4,
+              5,
+              6,
+              7,
+              8,
+              9,
+              10,
+              11,
+              12,
+              13,
+              14,
+              15,
+              16,
+              17,
+              18,
+              19,
+              20,
+              21,
+              22,
+              23,
+              24,
+              25,
+              26,
+              28,
+              30,
+              38,
+              40,
+              54,
+              56,
+              75],
+ &#39;activities&#39;: [&#39;no&#39;, &#39;yes&#39;],
+ &#39;address&#39;: [&#39;R&#39;, &#39;U&#39;],
+ &#39;age&#39;: [15, 16, 17, 18, 19, 20, 21, 22],
+ &#39;failures&#39;: [0, 1, 2, 3],
+ &#39;famrel&#39;: [1, 2, 3, 4, 5],
+ &#39;famsize&#39;: [&#39;GT3&#39;, &#39;LE3&#39;],
+ &#39;famsup&#39;: [&#39;no&#39;, &#39;yes&#39;],
+ &#39;freetime&#39;: [1, 2, 3, 4, 5],
+ &#39;goout&#39;: [1, 2, 3, 4, 5],
+ &#39;guardian&#39;: [&#39;father&#39;, &#39;mother&#39;, &#39;other&#39;],
+ &#39;health&#39;: [1, 2, 3, 4, 5],
+ &#39;higher&#39;: [&#39;no&#39;, &#39;yes&#39;],
+ &#39;internet&#39;: [&#39;no&#39;, &#39;yes&#39;],
+ &#39;nursery&#39;: [&#39;no&#39;, &#39;yes&#39;],
+ &#39;paid&#39;: [&#39;no&#39;, &#39;yes&#39;],
+ &#39;reason&#39;: [&#39;course&#39;, &#39;home&#39;, &#39;other&#39;, &#39;reputation&#39;],
+ &#39;romantic&#39;: [&#39;no&#39;, &#39;yes&#39;],
+ &#39;school&#39;: [&#39;GP&#39;, &#39;MS&#39;],
+ &#39;schoolsup&#39;: [&#39;no&#39;, &#39;yes&#39;],
+ &#39;sex&#39;: [&#39;F&#39;, &#39;M&#39;],
+ &#39;studytime&#39;: [1, 2, 3, 4],
+ &#39;traveltime&#39;: [1, 2, 3, 4]}
 </pre>
 </div>
 </div>
@@ -12429,6 +12584,211 @@ passed: [&#39;no&#39; &#39;yes&#39;]
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_all</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt output_prompt">Out[7]:</div>
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style>
+    .dataframe thead tr:only-child th {
+        text-align: right;
+    }
+
+    .dataframe thead th {
+        text-align: left;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>school_GP</th>
+      <th>school_MS</th>
+      <th>sex_F</th>
+      <th>sex_M</th>
+      <th>age</th>
+      <th>address_R</th>
+      <th>address_U</th>
+      <th>famsize_GT3</th>
+      <th>famsize_LE3</th>
+      <th>Pstatus_A</th>
+      <th>...</th>
+      <th>higher</th>
+      <th>internet</th>
+      <th>romantic</th>
+      <th>famrel</th>
+      <th>freetime</th>
+      <th>goout</th>
+      <th>Dalc</th>
+      <th>Walc</th>
+      <th>health</th>
+      <th>absences</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>18</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>17</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>5</td>
+      <td>3</td>
+      <td>3</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>15</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>3</td>
+      <td>3</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>15</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>3</td>
+      <td>2</td>
+      <td>2</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>16</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+      <td>5</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 48 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Feature-Scaling">Feature Scaling<a class="anchor-link" href="#Feature-Scaling">&#182;</a></h3><p>Standardization of datasets is a common requirement for many machine learning estimators, Logistic Regression and Support Vector Machine for instance are not scale invariant, so it is highly recommended to scale our data. Since our data consists exclusively of binary variables - after the preprocessing and generation of dummy variables - it makes no sense to  standardize it, so we are not going to do that.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
 </div>
@@ -12449,19 +12809,25 @@ passed: [&#39;no&#39; &#39;yes&#39;]
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
+<div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import any additional functionality you may need here</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+
 <span class="c1"># Set the number of training points</span>
 <span class="n">num_train</span> <span class="o">=</span> <span class="mi">300</span>
 
 <span class="c1"># Set the number of testing points</span>
 <span class="n">num_test</span> <span class="o">=</span> <span class="n">X_all</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">num_train</span>
 
-<span class="c1"># TODO: Shuffle and split the dataset into the number of training and testing points above</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_all</span><span class="p">,</span> <span class="n">y_all</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="n">num_test</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="c1"># Shuffle and split the dataset into the number of training and testing points above</span>
+<span class="c1"># Added stratification to deal with unbalanced dataset </span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_all</span><span class="p">,</span> 
+                                                    <span class="n">y_all</span><span class="p">,</span> 
+                                                    <span class="n">test_size</span><span class="o">=</span><span class="n">num_test</span><span class="p">,</span> 
+                                                    <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> 
+                                                    <span class="n">stratify</span><span class="o">=</span><span class="n">y_all</span><span class="p">)</span>
 
 <span class="c1"># Show the results of the split</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Training set has </span><span class="si">{}</span><span class="s2"> samples.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">X_train</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
@@ -12662,7 +13028,7 @@ wide popularity in the field of medicine.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
+<div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">train_classifier</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">):</span>
@@ -12735,50 +13101,24 @@ wide popularity in the field of medicine.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TODO: Import the three supervised learning models from sklearn</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import the three supervised learning models from sklearn</span>
 <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="k">import</span> <span class="n">LogisticRegression</span>
 <span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span>  <span class="n">RandomForestClassifier</span>
 <span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="k">import</span> <span class="n">SVC</span>
 
 
 <span class="c1"># Initialize the three models</span>
-<span class="n">clf_A</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">clf_B</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">()</span>
-<span class="n">clf_C</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">clf_A</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">clf_B</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">clf_C</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-<span class="c1"># Set up the training set sizes</span>
-
-<span class="c1">#sample = np.random.choice(n_students, 100)</span>
-
-<span class="n">X_train_100</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
-<span class="n">y_train_100</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[:</span><span class="mi">100</span><span class="p">]</span>
-
-<span class="c1">#sample = np.random.choice(n_students, 100)</span>
-
-<span class="n">X_train_200</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:</span><span class="mi">200</span><span class="p">]</span>
-<span class="n">y_train_200</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[:</span><span class="mi">200</span><span class="p">]</span>
-
-
-<span class="n">X_train_300</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:</span><span class="mi">300</span><span class="p">]</span>
-<span class="n">y_train_300</span> <span class="o">=</span> <span class="n">y_train</span><span class="p">[:</span><span class="mi">300</span><span class="p">]</span>
-
-
-<span class="c1"># Execute the &#39;train_predict&#39; function for each classifier and each training set size</span>
-
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">X_train_100</span><span class="p">,</span> <span class="n">y_train_100</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">X_train_200</span><span class="p">,</span> <span class="n">y_train_200</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">X_train_300</span><span class="p">,</span> <span class="n">y_train_300</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_B</span><span class="p">,</span> <span class="n">X_train_100</span><span class="p">,</span> <span class="n">y_train_100</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_B</span><span class="p">,</span> <span class="n">X_train_200</span><span class="p">,</span> <span class="n">y_train_200</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_B</span><span class="p">,</span> <span class="n">X_train_300</span><span class="p">,</span> <span class="n">y_train_300</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_C</span><span class="p">,</span> <span class="n">X_train_100</span><span class="p">,</span> <span class="n">y_train_100</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_C</span><span class="p">,</span> <span class="n">X_train_200</span><span class="p">,</span> <span class="n">y_train_200</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
-<span class="n">train_predict</span><span class="p">(</span><span class="n">clf_C</span><span class="p">,</span> <span class="n">X_train_300</span><span class="p">,</span> <span class="n">y_train_300</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">clf</span> <span class="ow">in</span> <span class="p">[</span><span class="n">clf_A</span><span class="p">,</span> <span class="n">clf_B</span><span class="p">,</span> <span class="n">clf_C</span><span class="p">]:</span>
+    <span class="k">for</span> <span class="n">size</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]:</span>
+        <span class="n">train_predict</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">[:</span><span class="n">size</span><span class="p">],</span> <span class="n">y_train</span><span class="p">[:</span><span class="n">size</span><span class="p">],</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="o">*</span><span class="mi">80</span><span class="p">)</span>
 </pre></div>
 
 </div>
@@ -12795,85 +13135,88 @@ wide popularity in the field of medicine.
 <div class="output_subarea output_stream output_stdout output_text">
 <pre>
 Training a LogisticRegression using a training set size of 100. . .
-Trained model in 0.0079 seconds
-Made predictions in 0.0075 seconds.
+Trained model in 0.0053 seconds
+Made predictions in 0.0020 seconds.
 
-F1 score for training set: 0.8529.
-Made predictions in 0.0010 seconds.
+F1 score for training set: 0.8671.
+Made predictions in 0.0004 seconds.
 
-F1 score for test set: 0.7737.
+F1 score for test set: 0.7068.
 
 Training a LogisticRegression using a training set size of 200. . .
-Trained model in 0.0059 seconds
-Made predictions in 0.0012 seconds.
+Trained model in 0.0042 seconds
+Made predictions in 0.0004 seconds.
 
-F1 score for training set: 0.8269.
-Made predictions in 0.0005 seconds.
+F1 score for training set: 0.8211.
+Made predictions in 0.0004 seconds.
 
-F1 score for test set: 0.7857.
+F1 score for test set: 0.7391.
 
 Training a LogisticRegression using a training set size of 300. . .
-Trained model in 0.0103 seconds
-Made predictions in 0.0009 seconds.
+Trained model in 0.0056 seconds
+Made predictions in 0.0005 seconds.
 
-F1 score for training set: 0.8337.
-Made predictions in 0.0006 seconds.
+F1 score for training set: 0.8512.
+Made predictions in 0.0005 seconds.
+
+F1 score for test set: 0.7500.
+================================================================================
+
+Training a RandomForestClassifier using a training set size of 100. . .
+Trained model in 0.0229 seconds
+Made predictions in 0.0028 seconds.
+
+F1 score for training set: 0.9924.
+Made predictions in 0.0022 seconds.
 
 F1 score for test set: 0.7368.
 
-Training a RandomForestClassifier using a training set size of 100. . .
-Trained model in 0.0549 seconds
-Made predictions in 0.0061 seconds.
-
-F1 score for training set: 1.0000.
-Made predictions in 0.0034 seconds.
-
-F1 score for test set: 0.7153.
-
 Training a RandomForestClassifier using a training set size of 200. . .
-Trained model in 0.0443 seconds
-Made predictions in 0.0038 seconds.
+Trained model in 0.0231 seconds
+Made predictions in 0.0040 seconds.
 
-F1 score for training set: 0.9925.
-Made predictions in 0.0036 seconds.
+F1 score for training set: 0.9885.
+Made predictions in 0.0037 seconds.
 
-F1 score for test set: 0.7794.
+F1 score for test set: 0.6822.
 
 Training a RandomForestClassifier using a training set size of 300. . .
-Trained model in 0.0438 seconds
-Made predictions in 0.0041 seconds.
+Trained model in 0.0376 seconds
+Made predictions in 0.0038 seconds.
 
-F1 score for training set: 0.9924.
-Made predictions in 0.0033 seconds.
+F1 score for training set: 0.9975.
+Made predictions in 0.0035 seconds.
 
-F1 score for test set: 0.7556.
+F1 score for test set: 0.7132.
+================================================================================
 
 Training a SVC using a training set size of 100. . .
-Trained model in 0.0024 seconds
-Made predictions in 0.0017 seconds.
-
-F1 score for training set: 0.8591.
-Made predictions in 0.0014 seconds.
-
-F1 score for test set: 0.8333.
-
-Training a SVC using a training set size of 200. . .
-Trained model in 0.0066 seconds
-Made predictions in 0.0048 seconds.
-
-F1 score for training set: 0.8581.
+Trained model in 0.0034 seconds
 Made predictions in 0.0025 seconds.
 
-F1 score for test set: 0.8408.
+F1 score for training set: 0.8354.
+Made predictions in 0.0023 seconds.
+
+F1 score for test set: 0.8025.
+
+Training a SVC using a training set size of 200. . .
+Trained model in 0.0093 seconds
+Made predictions in 0.0080 seconds.
+
+F1 score for training set: 0.8431.
+Made predictions in 0.0041 seconds.
+
+F1 score for test set: 0.8105.
 
 Training a SVC using a training set size of 300. . .
-Trained model in 0.0135 seconds
-Made predictions in 0.0100 seconds.
+Trained model in 0.0174 seconds
+Made predictions in 0.0153 seconds.
 
-F1 score for training set: 0.8584.
-Made predictions in 0.0034 seconds.
+F1 score for training set: 0.8664.
+Made predictions in 0.0036 seconds.
 
-F1 score for test set: 0.8462.
+F1 score for test set: 0.8052.
+================================================================================
 </pre>
 </div>
 </div>
@@ -12910,24 +13253,24 @@ F1 score for test set: 0.8462.
 <tbody>
 <tr>
 <td style="text-align:center">100</td>
-<td style="text-align:center">0.0063</td>
-<td style="text-align:center">0.0113</td>
-<td style="text-align:center">0.8571</td>
-<td style="text-align:center">0.7612</td>
+<td style="text-align:center">0.0053</td>
+<td style="text-align:center">0.0004</td>
+<td style="text-align:center">0.8671</td>
+<td style="text-align:center">0.7068</td>
 </tr>
 <tr>
 <td style="text-align:center">200</td>
-<td style="text-align:center">0.0055</td>
-<td style="text-align:center">0.0006</td>
-<td style="text-align:center">0.8380</td>
-<td style="text-align:center">0.7794</td>
+<td style="text-align:center">0.0042</td>
+<td style="text-align:center">0.0004</td>
+<td style="text-align:center">0.8211</td>
+<td style="text-align:center">0.7391</td>
 </tr>
 <tr>
 <td style="text-align:center">300</td>
-<td style="text-align:center">0.0082</td>
-<td style="text-align:center">0.0007</td>
-<td style="text-align:center">0.8381</td>
-<td style="text-align:center">0.7910</td>
+<td style="text-align:center">0.0056</td>
+<td style="text-align:center">0.0005</td>
+<td style="text-align:center">0.8512</td>
+<td style="text-align:center">0.7500</td>
 </tr>
 </tbody>
 </table>
@@ -12944,24 +13287,24 @@ F1 score for test set: 0.8462.
 <tbody>
 <tr>
 <td style="text-align:center">100</td>
-<td style="text-align:center">0.0403</td>
-<td style="text-align:center">0.0036</td>
-<td style="text-align:center">0.9922</td>
-<td style="text-align:center">0.7463</td>
+<td style="text-align:center">0.0229</td>
+<td style="text-align:center">0.0022</td>
+<td style="text-align:center">0.9924</td>
+<td style="text-align:center">0.7368</td>
 </tr>
 <tr>
 <td style="text-align:center">200</td>
-<td style="text-align:center">0.0280</td>
-<td style="text-align:center">0.0023</td>
-<td style="text-align:center">0.9925</td>
-<td style="text-align:center">0.7576</td>
+<td style="text-align:center">0.0231</td>
+<td style="text-align:center">0.0037</td>
+<td style="text-align:center">0.9885</td>
+<td style="text-align:center">0.6822</td>
 </tr>
 <tr>
 <td style="text-align:center">300</td>
-<td style="text-align:center">0.0263</td>
-<td style="text-align:center">0.0023</td>
-<td style="text-align:center">0.9903</td>
-<td style="text-align:center">0.7669</td>
+<td style="text-align:center">0.0376</td>
+<td style="text-align:center">0.0035</td>
+<td style="text-align:center">0.9975</td>
+<td style="text-align:center">0.7132</td>
 </tr>
 </tbody>
 </table>
@@ -12978,24 +13321,24 @@ F1 score for test set: 0.8462.
 <tbody>
 <tr>
 <td style="text-align:center">100</td>
-<td style="text-align:center">0.0026</td>
-<td style="text-align:center">0.0015</td>
-<td style="text-align:center">0.8591</td>
-<td style="text-align:center">0.7838</td>
+<td style="text-align:center">0.0034</td>
+<td style="text-align:center">0.0023</td>
+<td style="text-align:center">0.8354</td>
+<td style="text-align:center">0.8025</td>
 </tr>
 <tr>
 <td style="text-align:center">200</td>
-<td style="text-align:center">0.0066</td>
-<td style="text-align:center">0.0025</td>
-<td style="text-align:center">0.8696</td>
-<td style="text-align:center">0.7755</td>
+<td style="text-align:center">0.0093</td>
+<td style="text-align:center">0.0041</td>
+<td style="text-align:center">0.8431</td>
+<td style="text-align:center">0.8105</td>
 </tr>
 <tr>
 <td style="text-align:center">300</td>
-<td style="text-align:center">0.0130</td>
-<td style="text-align:center">0.0095</td>
-<td style="text-align:center">0.8692</td>
-<td style="text-align:center">0.7586</td>
+<td style="text-align:center">0.0174</td>
+<td style="text-align:center">0.0036</td>
+<td style="text-align:center">0.8664</td>
+<td style="text-align:center">0.8052</td>
 </tr>
 </tbody>
 </table>
@@ -13028,12 +13371,11 @@ F1 score for test set: 0.8462.
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>Answer: </strong> <strong>Logistic Regression</strong></p>
+<p><strong>Answer: </strong> <strong>Support Vector Machines</strong></p>
 <ul>
-<li>The logistic regression model is a lot simpler and more intuitive than Random Forests and Support Vector Machines. </li>
-<li>The training time is faster than the other 2 models for the current data set and probably for bigger ones too</li>
-<li>The prediction time in considerably faster than the second best model </li>
-<li>The performance on the test set only improved with bigger datasets and it was the best from the three.  </li>
+<li>The logistic regression model is a lot simpler and more intuitive than Random Forests and Support Vector Machines, but SVM had the best test scores on the three data sets and it's above 0.8, which is considered a good threshold. </li>
+<li>The prediction times in SVM is one order of magnitude higher than LR and about the same as Random Forests but it's still on the order of $\frac{1}{1000}$ of a second.</li>
+<li>By analysing the relationship between the training and the testing score in Random Forests, it seems to be overfitting.  </li>
 </ul>
 
 </div>
@@ -13056,13 +13398,16 @@ F1 score for test set: 0.8462.
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><strong>Answer: </strong></p>
 <ol>
-<li><p><strong>Question</strong>: In our data we have a bunch of features from the students but we don't have a clear way of descriminating how these features determine the information we are interested in: <strong>If the student pass or fail</strong></p>
+<li><p><strong>Question</strong>: In our data we have a bunch of features from the students but we don't have a clear way of discriminating how these features determine the information we are interested in: If the student <strong>passed or failed</strong></p>
 </li>
-<li><p><strong>How the Model make a prediction</strong>: For each student, the model receives a value reflecting a combination of his/her features and return another value which says if the prediction is <em>pass</em> or <em>fail</em></p>
+<li><p><strong>How the Model makes a prediction</strong>: If we had only two features for each student, $X_1$ and $X_2$, we could plot the values in a graphic like this: <img src="SVM.png" alt="SVM.png"></p>
+<p>The points in <strong><span style="color:green">green</span></strong> could be the students who <em>passed</em> and the points in <strong>  <span style="color:red">red</span></strong> the students who <em>failed</em>.</p>
+<p>The model classify the students by tracing a <em>line</em> which maximizes the distance between the points closer to the    border.</p>
+<p>Given that we have a lot more than 2 features, we can't visualize this <em>line</em> in more dimensions, but the model works in the same way.</p>
 </li>
 <li><p><strong>How we measure how good our model is</strong>: Since we know for each student who passed or failed, we check the # of correct predictions given by our model.</p>
 </li>
-<li><p><strong>How to improve the model:</strong> We alter the weight we give for each feature, repeat steps 2 and 3 and check if the hits ( correct predictions ) improved until the improvement is too small compared to the previous step, the we stop.</p>
+<li><p><strong>How to improve the model:</strong> We alter some internal parameters of the model, repeat steps 2 and 3 and check if the hits ( correct predictions ) improved until the improvement is too small compared to the previous step, then we stop.</p>
 </li>
 </ol>
 
@@ -13089,17 +13434,21 @@ F1 score for test set: 0.8462.
 <li>Perform grid search on the classifier <code>clf</code> using <code>f1_scorer</code> as the scoring method, and store it in <code>grid_obj</code>.</li>
 <li>Fit the grid search object to the training data (<code>X_train</code>, <code>y_train</code>), and store it in <code>grid_obj</code>.</li>
 </ul>
+<h3 id="Alternative-Tuning:">Alternative Tuning:<a class="anchor-link" href="#Alternative-Tuning:">&#182;</a></h3><ul>
+<li>Perform further splitting on train data with Stratified Shuffle Split</li>
+<li>Fit Randomized Grid Search instead on training data using the same scoring method and store in <code>rand_grid_obj</code></li>
+</ul>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Logistic Regression Parameters</span>
-<span class="n">clf_A</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># SVM Parameters</span>
+<span class="n">clf_C</span><span class="o">.</span><span class="n">get_params</span><span class="p">()</span>
 </pre></div>
 
 </div>
@@ -13111,25 +13460,25 @@ F1 score for test set: 0.8462.
 
 
 <div class="output_area">
-<div class="prompt output_prompt">Out[10]:</div>
+<div class="prompt output_prompt">Out[11]:</div>
 
 
 
 <div class="output_text output_subarea output_execute_result">
 <pre>{&#39;C&#39;: 1.0,
+ &#39;cache_size&#39;: 200,
  &#39;class_weight&#39;: None,
- &#39;dual&#39;: False,
- &#39;fit_intercept&#39;: True,
- &#39;intercept_scaling&#39;: 1,
- &#39;max_iter&#39;: 100,
- &#39;multi_class&#39;: &#39;ovr&#39;,
- &#39;n_jobs&#39;: 1,
- &#39;penalty&#39;: &#39;l2&#39;,
- &#39;random_state&#39;: 0,
- &#39;solver&#39;: &#39;liblinear&#39;,
- &#39;tol&#39;: 0.0001,
- &#39;verbose&#39;: 0,
- &#39;warm_start&#39;: False}</pre>
+ &#39;coef0&#39;: 0.0,
+ &#39;decision_function_shape&#39;: None,
+ &#39;degree&#39;: 3,
+ &#39;gamma&#39;: &#39;auto&#39;,
+ &#39;kernel&#39;: &#39;rbf&#39;,
+ &#39;max_iter&#39;: -1,
+ &#39;probability&#39;: False,
+ &#39;random_state&#39;: 42,
+ &#39;shrinking&#39;: True,
+ &#39;tol&#39;: 0.001,
+ &#39;verbose&#39;: False}</pre>
 </div>
 
 </div>
@@ -13140,34 +13489,51 @@ F1 score for test set: 0.8462.
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
+<div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Import &#39;GridSearchCV&#39; and &#39;make_scorer&#39;</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">GridSearchCV</span>
 <span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">make_scorer</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">StratifiedKFold</span>
 
+<span class="c1"># </span>
+<span class="n">C_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="c1"># Create the parameters list you wish to tune</span>
-<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="o">**</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">30</span><span class="p">)]}</span>
+<span class="n">gamma_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 
-<span class="c1"># Initialize the classifier</span>
-<span class="n">clf</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-                         <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">class_weight</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+
+<span class="c1"># Create dict of parameters</span>
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">C_range</span><span class="p">,</span>
+              <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">gamma_range</span><span class="p">,</span>
+              <span class="s1">&#39;class_weight&#39;</span><span class="p">:</span> <span class="n">class_weight</span><span class="p">,</span>
+             <span class="p">}</span>
+              
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>          
+          <span class="n">cache_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+          <span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">)</span>          
 
 <span class="c1"># Make an f1 scoring function using &#39;make_scorer&#39; </span>
 <span class="n">f1_scorer</span> <span class="o">=</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">f1_score</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span><span class="p">)</span>
 
 <span class="c1"># Perform grid search on the classifier using the f1_scorer as the scoring method</span>
-<span class="n">grid_obj</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">f1_scorer</span><span class="p">)</span>
+<span class="n">grid_obj</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">f1_scorer</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="c1"># TODO: Fit the grid search object to the training data and find the optimal parameters</span>
+
+<span class="c1"># Fit the grid search object to the training data and find the optimal parameters</span>
 <span class="n">grid_obj</span> <span class="o">=</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-<span class="c1"># Get the estimator</span>
+
+<span class="c1"># Get the estimators</span>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">grid_obj</span><span class="o">.</span><span class="n">best_estimator_</span>
 
-
+<span class="c1"># Report the best parameters found</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best parameters set found using Grid Search on training set:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">grid_obj</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
 
 <span class="c1"># Report the final F1 score for training and testing after parameter tuning</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tuned model has a training F1 score of </span><span class="si">{:.4f}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">predict_labels</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)))</span>
@@ -13186,10 +13552,14 @@ F1 score for test set: 0.8462.
 <div class="prompt"></div>
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Made predictions in 0.0005 seconds.
-Tuned model has a training F1 score of 0.8297.
-Made predictions in 0.0005 seconds.
-Tuned model has a testing F1 score of 0.8514.
+<pre>Best parameters set found using Grid Search on training set:
+
+{&#39;C&#39;: 1.236380194440728, &#39;class_weight&#39;: None, &#39;gamma&#39;: 0.024920371535525433}
+
+Made predictions in 0.0098 seconds.
+Tuned model has a training F1 score of 0.8993.
+Made predictions in 0.0032 seconds.
+Tuned model has a testing F1 score of 0.8158.
 </pre>
 </div>
 </div>
@@ -13197,6 +13567,582 @@ Tuned model has a testing F1 score of 0.8514.
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Confusion-Matrix">Confusion Matrix<a class="anchor-link" href="#Confusion-Matrix">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span> <span class="c1"># Install using &#39;pip install seaborn&#39;</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">cm_test</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_test</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">,</span> <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">],</span> <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix for the Test Set&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+vwYMGUlquK6uriFdhmAnYEZ9/TJgcn87OFwmSQ1XcHXZGyNiBrAWcDIwoWV47CFg/f4aMGQkqeEK
+TfzfRRUsPwJeB8zi5ZkxoIMaMpLUcCVCJjP/CPywvnlPRCwAto2IcZm5GNgAmN9fO87JSFLDdXd3
+D+nSl4jYPyKOra+/BpgIfBeYUj9kCnBlf32zkpGkhis0XDYDuCgi3gesChwG3AZcEBGHAvOA8/tr
+xJCRpIYrMfGfmQuBv1vOXbsOph1DRpIazk/8S5KKMWQkScV4FmYVd8stt3DMMcew6aabAvD617+e
+448/foR7pdFmxowZ3HvvvbzwwgtMnjyZN73pTVx00UU88sgjjB07lgMOOIDx48ePdDc7jpWMVopt
+ttmGr3zlKyPdDY1Sd911FwsWLODoo4/mqaee4owzzuDJJ59kwoQJTJ06ldmzZ3Pvvfey5ZZbjnRX
+O46VjKTG23TTTdl4440BGDduHEuXLuX2229n9913B2D77bcfye51tI6uZCLir4C3AC8At2XmfaWP
+2anuuecejjrqKJ544gk+/vGP+59ew6q7u5uxY8cCMGfOHLbYYgvuu+8+7rzzTi677DLWXHNNpkyZ
+woQJE0a4p52nnSuZoj2LiE8D04FdgD2AGRFxWMljdqqNN96Yww47jK9//eucdtppnHjiiTz77LMj
+3S2NQr/97W+5+eabmTKl+uD3euutx5FHHslrXvMarr322hHuXWdaiWdhHrTS8fc+YLvM/ERmfhzY
+FvhI4WN2pIkTJ7L77rvT1dXFRhttxDrrrMODDz440t3SKDN37lxmzpzJIYccwrhx41hjjTVeXGyy
++eabs2DBghHuYWfq5JDpohom6/UC0FP4mB3p8ssvZ9q0aQA88sgjPProo0ycOHFkO6VRZfHixcyY
+MYODDz74xSGxzTffnLlz5wJw3333se66645kF9WGSs/JXAzcGhFzqALn7cC3Cx+zI+28884cd9xx
+zJo1i2effZYTTjiBVVZZZaS7pVHktttu46mnnuL88186XdX+++/PpZdeys0338zYsWPZb7/9RrCH
+navjJv4j4qP11T8B3wBeTVXB3IyVTBETJkzgm9/85kh3Q6PY9ttvv9zFJAcccMDK74xepuNChpd/
+mU0P8CiwCnAksCFwQaHjSlLH6biQycyXnf45IvYBPgX8GDijxDElqVN1XMj0ioidgdOAXwK7ZeZD
+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
++f/gIjxlAU2YIwAAAABJRU5ErkJggg==
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">tn</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tp</span><span class="p">)</span> <span class="o">=</span> <span class="n">cm_test</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">tn</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tp</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">tp</span> <span class="o">+</span> <span class="n">tn</span><span class="p">)</span><span class="o">/</span><span class="n">total</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True Positive Rate: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tp</span><span class="o">/</span><span class="p">(</span><span class="n">tp</span><span class="o">+</span><span class="n">fn</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;False Positive Rate: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fp</span><span class="o">/</span><span class="p">(</span><span class="n">fp</span><span class="o">+</span><span class="n">tn</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Specificity: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tn</span><span class="o">/</span><span class="p">(</span><span class="n">fp</span><span class="o">+</span><span class="n">tn</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Precision: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tp</span><span class="o">/</span><span class="p">(</span><span class="n">fp</span><span class="o">+</span><span class="n">tp</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Prevalence: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span><span class="o">/</span><span class="n">total</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Accuracy: 0.7053
+True Positive Rate: 0.9688
+False Positive Rate: 0.8387
+Specificity: 0.1613
+Precision: 0.7045
+Prevalence: 0.6737
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Randomized-Grid-Search-with-Stratified-Shuffle-Splitting">Randomized Grid Search with Stratified Shuffle Splitting<a class="anchor-link" href="#Randomized-Grid-Search-with-Stratified-Shuffle-Splitting">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">StratifiedShuffleSplit</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">RandomizedSearchCV</span>
+
+<span class="k">def</span> <span class="nf">randomized_tuning</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">clf</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">scoring</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Performs Randomized grid search over the clf parameters using the </span>
+<span class="sd">    score function scorer provided on the input data [X, y]. &quot;&quot;&quot;</span>
+    
+    <span class="c1"># Create a Stratified Split</span>
+    <span class="n">sss</span> <span class="o">=</span> <span class="n">StratifiedShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>    
+    
+
+    <span class="c1"># Create the grid search cv object --&gt; GridSearchCV()</span>
+    <span class="c1"># Make sure to include the right parameters in the object:</span>
+    <span class="c1"># (estimator, param_grid, scoring, cv) which have values &#39;regressor&#39;, &#39;params&#39;, &#39;scoring_fnc&#39;, and &#39;cv_sets&#39; respectively.</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scoring</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">sss</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">error_score</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Fit the grid search object to the data to compute the optimal model</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="c1"># Return the optimal model after fitting the data</span>
+    <span class="k">return</span> <span class="n">grid</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="k">import</span> <span class="n">expon</span>
+
+<span class="c1"># Set seed for scipy</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="n">expon</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span> <span class="n">expon</span><span class="p">(</span><span class="n">scale</span><span class="o">=.</span><span class="mi">1</span><span class="p">),</span> 
+              <span class="s1">&#39;class_weight&#39;</span><span class="p">:[</span><span class="s1">&#39;balanced&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+             <span class="p">}</span>
+
+
+<span class="n">clf</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span>          
+          <span class="n">cache_size</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+          <span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">)</span>
+             
+
+<span class="c1"># Fit Randomized Grid Search on the classifier using the f1-scorer and Stratified Shuffle Split</span>
+<span class="n">rand_grid_obj</span> <span class="o">=</span> <span class="n">randomized_tuning</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">clf</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">f1_scorer</span><span class="p">)</span>
+
+<span class="n">clf_rand</span> <span class="o">=</span> <span class="n">rand_grid_obj</span><span class="o">.</span><span class="n">best_estimator_</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best parameters set found using Randomized Grid Search and Stratified Random Suffle Split on training set:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rand_grid_obj</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+
+<span class="c1"># Report the final F1 score for training and testing after parameter tuning</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tuned model has a training F1 score of </span><span class="si">{:.4f}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">predict_labels</span><span class="p">(</span><span class="n">clf_rand</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tuned model has a testing F1 score of </span><span class="si">{:.4f}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">predict_labels</span><span class="p">(</span><span class="n">clf_rand</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Best parameters set found using Randomized Grid Search and Stratified Random Suffle Split on training set:
+
+{&#39;C&#39;: 40.602818331379076, &#39;class_weight&#39;: None, &#39;gamma&#39;: 0.12312500617045903}
+
+Made predictions in 0.0123 seconds.
+Tuned model has a training F1 score of 1.0000.
+Made predictions in 0.0042 seconds.
+Tuned model has a testing F1 score of 0.8258.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Confusion-Matrix-for-the-Alternative-Tuned-Model">Confusion Matrix for the Alternative Tuned Model<a class="anchor-link" href="#Confusion-Matrix-for-the-Alternative-Tuned-Model">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf_rand</span> <span class="o">=</span> <span class="n">clf_rand</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf_rand</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">cm_test</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">cm_test</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Greys&#39;</span><span class="p">,</span> <span class="n">xticklabels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">],</span> <span class="n">yticklabels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;No&#39;</span><span class="p">,</span> <span class="s1">&#39;Yes&#39;</span><span class="p">])</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Confusion Matrix for the Test Set&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True&#39;</span><span class="p">)</span>
+<span class="n">_</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+
+
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+RK5CYII=
+"
+>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">tn</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tp</span><span class="p">)</span> <span class="o">=</span> <span class="n">cm_test</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">tn</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tp</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">tp</span> <span class="o">+</span> <span class="n">tn</span><span class="p">)</span><span class="o">/</span><span class="n">total</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;True Positive Rate: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tp</span><span class="o">/</span><span class="p">(</span><span class="n">tp</span><span class="o">+</span><span class="n">fn</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;False Positive Rate: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fp</span><span class="o">/</span><span class="p">(</span><span class="n">fp</span><span class="o">+</span><span class="n">tn</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Specificity: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tn</span><span class="o">/</span><span class="p">(</span><span class="n">fp</span><span class="o">+</span><span class="n">tn</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Precision: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tp</span><span class="o">/</span><span class="p">(</span><span class="n">fp</span><span class="o">+</span><span class="n">tp</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Prevalence: </span><span class="si">{:.4f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">((</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span><span class="o">/</span><span class="n">total</span><span class="p">))</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Accuracy: 0.7158
+True Positive Rate: 1.0000
+False Positive Rate: 0.8710
+Specificity: 0.1290
+Precision: 0.7033
+Prevalence: 0.6737
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The alternative tuned model improved the test score but the perfect training score shows overfitting. So our final model is the first one, tuned with the normal Grid Search.</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
@@ -13225,187 +14171,19 @@ Tuned model has a testing F1 score of 0.8514.
 <tbody>
 <tr>
 <td style="text-align:center">Untuned Model</td>
-<td style="text-align:center">0.8381</td>
-<td style="text-align:center">0.7910</td>
+<td style="text-align:center">0.8664</td>
+<td style="text-align:center">0.8052</td>
 </tr>
 <tr>
 <td style="text-align:center">Final Model</td>
-<td style="text-align:center">0.8297</td>
-<td style="text-align:center">0.8514</td>
+<td style="text-align:center">0.8993</td>
+<td style="text-align:center">0.8158</td>
 </tr>
 </tbody>
 </table>
 
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Alternative-tuning-using:">Alternative tuning using:<a class="anchor-link" href="#Alternative-tuning-using:">&#182;</a></h3><ul>
-<li>Stratified Shuffle Split</li>
-<li>Randomized Grid Search</li>
-</ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">StratifiedShuffleSplit</span>
-<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">RandomizedSearchCV</span>
-
-<span class="k">def</span> <span class="nf">tuning_model</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">clf</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">scorer</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot; Performs Randomized grid search over the clf parameters of clf parameter using the </span>
-<span class="sd">    score function scorer provided on the input data [X, y]. &quot;&quot;&quot;</span>
-    
-    <span class="c1"># Create a Stratified Split</span>
-    <span class="n">sss</span> <span class="o">=</span> <span class="n">StratifiedShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>    
-    
-
-    <span class="c1"># Create the grid search cv object --&gt; GridSearchCV()</span>
-    <span class="c1"># Make sure to include the right parameters in the object:</span>
-    <span class="c1"># (estimator, param_grid, scoring, cv) which have values &#39;regressor&#39;, &#39;params&#39;, &#39;scoring_fnc&#39;, and &#39;cv_sets&#39; respectively.</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">RandomizedSearchCV</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">scoring</span><span class="o">=</span><span class="n">scorer</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">sss</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="c1"># Fit the grid search object to the data to compute the optimal model</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">grid</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
-
-    <span class="c1"># Return the optimal model after fitting the data</span>
-    <span class="k">return</span> <span class="n">grid</span><span class="o">.</span><span class="n">best_estimator_</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Tunel-the-chosen-model-in-the-alternative-implementation">Tunel the chosen model in the alternative implementation<a class="anchor-link" href="#Tunel-the-chosen-model-in-the-alternative-implementation">&#182;</a></h4>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Initialize the classifier</span>
-<span class="n">clf</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
-
-      
-<span class="n">parameters</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">10</span><span class="o">**</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">30</span><span class="p">)]}</span>
-
-<span class="c1"># Make an f1 scoring function using &#39;make_scorer&#39; </span>
-<span class="n">f1_scorer</span> <span class="o">=</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">f1_score</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span><span class="p">)</span>
-
-<span class="c1"># Get the estimator</span>
-<span class="n">clf</span> <span class="o">=</span> <span class="n">tuning_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span> <span class="n">clf</span><span class="p">,</span><span class="n">parameters</span><span class="p">,</span> <span class="n">f1_scorer</span><span class="p">)</span>
-
-<span class="c1"># Report the final F1 score for training and testing after parameter tuning</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tuned model has a training F1 score of </span><span class="si">{:.4f}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">predict_labels</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tuned model has a testing F1 score of </span><span class="si">{:.4f}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">predict_labels</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Made predictions in 0.0004 seconds.
-Tuned model has a training F1 score of 0.8297.
-Made predictions in 0.0005 seconds.
-Tuned model has a testing F1 score of 0.8514.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The Alternative implementation performing further randomization in the training set and in the hyperparameters tuning performed virtually the same as the normal grid search given the same parameters.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Tunning-a-SVM-also-for-completeness">Tunning a SVM also for completeness<a class="anchor-link" href="#Tunning-a-SVM-also-for-completeness">&#182;</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">clf</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">()</span>
-
-<span class="n">C_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
-
-<span class="n">gamma_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">9</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">13</span><span class="p">)</span>
-
-<span class="n">parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="n">gamma_range</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="n">C_range</span><span class="p">)</span>
-
-<span class="c1"># Make an f1 scoring function using &#39;make_scorer&#39; </span>
-<span class="n">f1_scorer</span> <span class="o">=</span> <span class="n">make_scorer</span><span class="p">(</span><span class="n">f1_score</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="s1">&#39;yes&#39;</span><span class="p">)</span>
-
-<span class="c1"># Get the estimator</span>
-<span class="n">clf</span> <span class="o">=</span> <span class="n">tuning_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span><span class="n">y_train</span><span class="p">,</span> <span class="n">clf</span><span class="p">,</span><span class="n">parameters</span><span class="p">,</span> <span class="n">f1_scorer</span><span class="p">)</span>
-
-<span class="c1"># Report the final F1 score for training and testing after parameter tuning</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tuned model has a training F1 score of </span><span class="si">{:.4f}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">predict_labels</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tuned model has a testing F1 score of </span><span class="si">{:.4f}</span><span class="s2">.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">predict_labels</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)))</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-<div class="prompt"></div>
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Made predictions in 0.0088 seconds.
-Tuned model has a training F1 score of 0.7952.
-Made predictions in 0.0031 seconds.
-Tuned model has a testing F1 score of 0.8272.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="prompt input_prompt">
