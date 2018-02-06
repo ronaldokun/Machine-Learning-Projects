@@ -23,7 +23,7 @@ def pca_results(good_data, pca):
     '''
 
     # Dimension indexing
-    dimensions = dimensions = ['Dimension {}'.format(
+    dimensions = ['Dimension {}'.format(
         i) for i in range(1, len(pca.components_) + 1)]
 
     # PCA components
@@ -105,11 +105,13 @@ def biplot(good_data, reduced_data, pca):
     https://github.com/teddyroland/python-biplot
     '''
 
-    fig, ax = plt.subplots(figsize=(14, 8))
+    fig, ax = plt.subplots(figsize=(16, 8))
     # scatterplot of the reduced data
     ax.scatter(x=reduced_data.loc[:, 'Dimension 1'], y=reduced_data.loc[:, 'Dimension 2'],
                facecolors='b', edgecolors='b', s=70, alpha=0.5)
 
+    ax.set_xlim([-5, 5])
+    ax.set_ylim([-5, 6])
     feature_vectors = pca.components_.T
 
     # we use scaling factors to make the arrows easier to see
