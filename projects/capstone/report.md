@@ -27,7 +27,7 @@ The machine learning algorithm can help more teachers get funded more quickly, a
 
 ### Metrics
 
-The purpose of this project is to provide a [binary classification](https://en.wikipedia.org/wiki/Binary_classifier). As defined by the Problem Statement above, the biggest problem with manual classification is the scale of the task. Since the most important part is the ability to finance potentially good projects and not being held off by a failure to analyse them in time. In other words, the sensitivity - *True Positive Rates* - is the most important aspect. Good projects should be classified as such and approved, and the approval of bad projects should be as low as possible. The trade-off between Good Projects ( *True Positives* ) and bad projects wrongfully classified as good ones ( *False Positives* ) can be represented by the [Receiver operating characteristic](https://en.wikipedia.org/wiki/Receiver_operating_characteristic), i.e. ROC Curve: <br><br> ![ROC curve](data/img/roc.png). <br><br> It's a plot between the true positive rate ( sensitivity ) against the false positive rate (1 - specificity). The metric chosen by the organizers of the competition was the area under the ROC Curve -  AUC, so that what I used. This can be interpreted as: An uninformative classifier gives an AUC ~ 0.5. A valid and reliable classifier  ( AUC > 0.5 ) assigns a higher score to a randomly chosen Good Project and a lower score to a randomly chosen bad project.
+The purpose of this project is to provide a [binary classification](https://en.wikipedia.org/wiki/Binary_classifier). As defined by the Problem Statement above, the biggest problem with manual classification is the scale of the task. Since the most important part is the ability to finance potentially good projects and not being held off by a failure to analyse them in time. In other words, the sensitivity - *True Positive Rates* - is the most important aspect. Good projects should be classified as such and approved, and the approval of bad projects should be as low as possible. The trade-off between Good Projects ( *True Positives* ) and bad projects wrongfully classified as good ones ( *False Positives* ) can be represented by the [Receiver operating characteristic](https://en.wikipedia.org/wiki/Receiver_operating_characteristic), i.e. ROC Curve: <br><br> ![ROC curve](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/roc.png). <br><br> It's a plot between the true positive rate ( sensitivity ) against the false positive rate (1 - specificity). The metric chosen by the organizers of the competition was the area under the ROC Curve -  AUC, so that what I used. This can be interpreted as: An uninformative classifier gives an AUC ~ 0.5. A valid and reliable classifier  ( AUC > 0.5 ) assigns a higher score to a randomly chosen Good Project and a lower score to a randomly chosen bad project.
 
 
 ## II. Analysis
@@ -126,13 +126,13 @@ Feature | Description | Data Type
 
 Let's visualize the number of project proposals per state (the dynamic map is more interesting and can be seen in the notebook).
 
-![Number of Submitted Project Proposals per US State](data/img/submissions.png)
+![Number of Submitted Project Proposals per US State](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/submissions.png)
 
 * California (CA) has the biggest number of proposals `25.695k`, followed by Texas (TX) with `12.304k` and New York with `12.157k`. Bare in mind that this is just the total number and it's not normalized by the population of each state or the number of schools and teachers. So a great deal of variance is normal.
 
 Now let's see the same distribution of only the *approved submissions*:
 
-![Number of Approved Project Proposals per US State](data/img/approvals.png)
+![Number of Approved Project Proposals per US State](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/approvals.png)
 
 The approvals distribution doesn't seem to differ too much from the submissions. There is no clear differences apart from the switch of positions between Texas and New York.
 
@@ -141,7 +141,7 @@ The approvals distribution doesn't seem to differ too much from the submissions.
 
 Let's check the distribution of teachers by prefix and derive the gender distribution from this.
 
-![Teachers Prefix and Gender](data/img/teachers.png)
+![Teachers Prefix and Gender](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/teachers.png)
 
 * There is a considerate dominance by women, around 90%
 * Note: Since we can't determine the gender in `Dr.` and `"Teacher` I left those ones out in the graphical representation.
@@ -149,23 +149,23 @@ Let's check the distribution of teachers by prefix and derive the gender distrib
 
 Now we plot the distribution of gender in relation to approval rates:
 
-![Approval Rate by Gender](data/img/gender_dist.png)
+![Approval Rate by Gender](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/gender_dist.png)
 * Ideally the approval of a project should be independent of gender, this seems to be the case on this data.
 
 
 #### Project Categories and Grades
 <br>
 
-![Project Categories](data/img/categories.png)
+![Project Categories](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/categories.png)
 
 * We only showed the top 10 categories to keep the plot readable.
 * The `subject_categories`are dominated by `Literacy & language` and `Math & Science` or a combination of one of them. `Health & Sports`, `Music & The Arts` and `Special Needs`are also numerous 
 
-![Project Subcategories](data/img/subcategories.png)
+![Project Subcategories](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/subcategories.png)
 
 * The subcategories doesn't seem to add much information in relation to their parent category 
 
-![Project Grades](data/img/grades.png)
+![Project Grades](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/grades.png)
 
 * There are more project proposals for younger students, which make perfect sense, since this age is deeply important as formative years of the child.
 * Good teachers have to make the full use of their creativity to provide an optimal learning environment, and for this to happen a lot of projects and, naturally, more resources are needed.
@@ -175,7 +175,7 @@ Now we plot the distribution of gender in relation to approval rates:
 
 Let's plot a wordcloud showing the top resources needed.
 
-![Resources Summary](data/img/resources.png)
+![Resources Summary](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/resources.png)
 
 * We see the focus on the text in the resources are student centered materials, such as 
   * electronics: `headphones, chromebook and ipad` 
@@ -185,7 +185,7 @@ Let's plot a wordcloud showing the top resources needed.
 
 #### Target Feature
 
-![Target](data/img/target.png)
+![Target](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/target.png)
  * The staggering majority of projects - `~85%` - are approved. This add a considerable imbalance to the analysis.
 
 
@@ -317,8 +317,8 @@ The parameters applied were based on the excellent article from the Kaggle Maste
 
 Given the limitation of not using a state-of-the-art DNN model in this project, I decided to take the ensemble idea one step further and stacked two different implementation of `Boosted Trees`:</br>
 
-* The traditinal `XGBoost` which uses Level-wise tree growth: </br>![Leaf-Wise](data/img/level-wise.png).</br>
-* The  [`LightGBM`](https://lightgbm.readthedocs.io/en/latest), which constructs the tree by Leaf-wise (Best-first) Tree Growth: </br>![Leaf-Wise](data/img/leaf-wise.png). </br> 
+* The traditinal `XGBoost` which uses Level-wise tree growth: </br>![Leaf-Wise](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/level-wise.png).</br>
+* The  [`LightGBM`](https://lightgbm.readthedocs.io/en/latest), which constructs the tree by Leaf-wise (Best-first) Tree Growth: </br>![Leaf-Wise](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/leaf-wise.png). </br> 
  
 The boosting technique used in `LightGBM`was [DART: Dropouts meet Multiple Additive Regression Trees](https://arxiv.org/abs/1505.01866), different from the traditional `gbdt` used in xgboost. This way I have two different ensembles of Decision Trees with different tree growth algorithms and different boosting techniques.
 
@@ -383,16 +383,34 @@ The predictions on the test set from each fold of the 2 models were combined in 
 
 #### Final Model and Justification 
 
-Even after extensive trial-and-error on the hyperparameters of `xgboost` the model was still showing a considerable overfitting: *training score much higher than validation score*. The `lightgbm` model didn't have this problem. The final prediction of this ensemble was submitted to Kaggle and got a Public Score of `AUC: 0.77056`
+Even after extensive trial-and-error on the hyperparameters of `xgboost` the model was still showing a considerable overfitting: *training score much higher than validation score*:
+* Training Score: `0.919464`
+* Validation Score: `0.777374`
 
-Finally I decided to drop the `xgboost` model, given the overfitting, and use just the 5-fold ensemble of `lightgbm` to make predictions on the test set and submit again to Kaggle. 
+The `lightgbm` model also had this problem, but a little less severe:
+* Training Score: `0.883812`
+* Validation Score: `0.783001`
+
+The final prediction of this ensemble was submitted to Kaggle and got a Public Score of `AUC: 0.77056`. This score is based on the test set from Kaggle and is *unseen* to the training - We have the test set for prediction but not the labels
+
+Finally I decided to drop the `xgboost` model, given the *bigger* overfitting, and use just the 5-fold ensemble of `lightgbm` to make predictions on the test set and submit again to Kaggle. 
 
 This second choice got a Public Score of `AUC: 0.78157` and it was my final submission in the competition. Nevertheless this submission is not present in the notebook, only the first one.
+
+The Public Score is evaluated on only 30% of the data, the remaining 70% is evaluated only after the competition is over.
+
+My final score and classification, after the competition was over, was: [`AUC: 0.77431` and `248th`](https://www.kaggle.com/c/donorschoose-application-screening/leaderboard) of a total 581 teams. 
+
+Even though the test score is in the same range as the validation score found during training, the gap to the training score persists and in the end the model is not a good final model capable of significant generalization. 
+
+I can argue that my model have a `77%` chance of sucess, as well as many of the other submissions from Kaggle, but that alone doesn't make it a good final model. 
+
+A new strategy to deal with this *overfitting* is necessary and remains as a challenge that I couldn't accomplish in the scope of this project.     
 
 
 #### ROC-AUC Curve
 
-![ROC-AUC Curve](data/img/roc_curve.png).
+![ROC-AUC Curve](/home/ronaldo/projects/machine-learning/nanodegree-ml/projects/capstone/data/img/roc_curve.png).
 
 ### V. Conclusion
 
@@ -400,11 +418,7 @@ This second choice got a Public Score of `AUC: 0.78157` and it was my final subm
 
 This project was extremely interesting because of the mixture of categorical, numerical and heavy textual features. In addition the cause is fantastic. A total of 581 teams participated and I learned a lot from the discussions and from the amazing notebooks of other contestants. I encountered great difficulty when dealing with the high dimensions of the data set resulting from the vectorization of textual features. Working in an instance of Google Cloud with GPU support and lots of memory diminished my frustration a bit but in the end I could make it work by just using an i-5 dell laptop with 8GB RAM. 
 
-The Public Score is evaluated on only 30% of the data, the remaining 70% is evaluated only after the competition is over.
-
-My final score and classification, after the competition was over, was: [`AUC: 0.77431` and `248th`](https://www.kaggle.com/c/donorschoose-application-screening/leaderboard) of a total 581 teams. Since this result is similiar to the validation scores founded during training, the result is robust to unseen data and also gives enough margin to help in making a decision given a new submission. 
-
-I considered this an extremely successful result for a first competition, be in the upper `42.8%`.
+Even after the considerations given in the previous section, I considered this an extremely successful result for a first competition, to be in the upper `42.8%`.
 
 
 #### Improvement
